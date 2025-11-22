@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnePiece Distribution - File Index</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #202124;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+        }
+        
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #dadce0;
+            padding: 24px 40px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            color: #5f6368;
+            font-weight: 400;
+        }
+        
+        .header .url {
+            font-size: 13px;
+            color: #1a73e8;
+            margin-top: 4px;
+        }
+        
+        .curl-instructions {
+            background: #f8f9fa;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 40px;
+        }
+        
+        .curl-instructions h3 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #202124;
+            margin-bottom: 16px;
+        }
+        
+        .curl-instructions p {
+            font-size: 14px;
+            color: #5f6368;
+            margin-bottom: 8px;
+        }
+        
+        .curl-instructions code {
+            display: block;
+            background: #ffffff;
+            color: #202124;
+            padding: 16px;
+            border-radius: 4px;
+            border: 1px solid #dadce0;
+            margin: 12px 0;
+            overflow-x: auto;
+            font-family: 'Roboto Mono', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        .file-list {
+            padding: 24px 40px 40px;
+        }
+        
+        .file-category {
+            margin-bottom: 40px;
+        }
+        
+        .file-category h2 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #202124;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #e8eaed;
+        }
+        
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 12px;
+        }
+        
+        .file-item {
+            background: #ffffff;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 48px;
+        }
+        
+        .file-item:hover {
+            background: #f8f9fa;
+            border-color: #dadce0;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+        }
+        
+        .file-name {
+            font-size: 14px;
+            font-weight: 400;
+            color: #202124;
+            word-break: break-all;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .file-icon {
+            color: #5f6368;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .download-btn {
+            background: #ffffff;
+            color: #1a73e8;
+            padding: 8px 16px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            margin-left: 12px;
+            white-space: nowrap;
+        }
+        
+        .download-btn:hover {
+            background: #f8f9fa;
+            border-color: #1a73e8;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+        }
+        
+        .folder-item {
+            background: #fef7e0;
+            border-color: #f9ab00;
+        }
+        
+        .folder-item:hover {
+            background: #feefc3;
+            border-color: #f9ab00;
+        }
+        
+        .folder-item .file-icon {
+            color: #f9ab00;
+        }
+        
+        .stats {
+            background: #f8f9fa;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            padding: 16px 24px;
+            margin: 24px 40px;
+            text-align: center;
+            font-size: 14px;
+            color: #5f6368;
+        }
+        
+        .stats span {
+            font-weight: 500;
+            color: #202124;
+        }
+        
+        .search-box {
+            margin: 24px 40px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 48px 12px 16px;
+            border: 1px solid #dadce0;
+            border-radius: 24px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s;
+        }
+        
+        .search-box input:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+        }
+        
+        .search-box input::placeholder {
+            color: #5f6368;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>OnePiece Distribution</h1>
+            <p>File Index & Download Center</p>
+            <p class="url">bcworks.in.net/Onepiece</p>
+        </div>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search files..." oninput="filterFiles()">
+        </div>
+        
+        <div class="stats">
+            Total Files: <span id="fileCount">0</span> • Total Folders: <span id="folderCount">0</span>
+        </div>
+        
+        <div class="curl-instructions">
+            <h3>Bulk Download via PowerShell (Windows)</h3>
+            <p>Download all files using PowerShell:</p>
+            <code>$files = (Invoke-WebRequest -Uri "https://bcworks.in.net/Onepiece/").Links.href | Where-Object { $_ -notmatch '^#' -and $_ -ne '' -and $_ -notmatch '/$' }; foreach ($file in $files) { Invoke-WebRequest -Uri "https://bcworks.in.net/Onepiece/$file" -OutFile $file }</code>
+            
+            <p>Download specific file (Windows):</p>
+            <code>curl -O https://bcworks.in.net/Onepiece/OnePiece.exe</code>
+            
+            <p>Or using PowerShell:</p>
+            <code>Invoke-WebRequest -Uri "https://bcworks.in.net/Onepiece/OnePiece.exe" -OutFile "OnePiece.exe"</code>
+
+                        <p>Or Drop Box</p>
+                        <code>https://www.dropbox.com/scl/fi/f5qsax3j05k16y5le0a5t/Roxy-s-Onepiece-v6.rar?rlkey=b03t4g22rwic55sk2ohb1cxxm&st=kufip4a4&dl=1</code>
+<p>Or Mega.nz</p>
+                        <code>https://mega.nz/file/z54FGRqI#KJr4bLHjwkHp746_huJuQgyW3jsNnW3UhecuuJHuPjM
+</code>
+<p>Or Lime Wire</p>
+                        <code>https://limewire.com/d/GYRF2#iIjPAfa77o</code>
+
+
+            
+            <h3 style="margin-top: 20px;">For Linux/Mac btw it works only on Windows (LOL)</h3>
+            <p>Download all files using curl:</p>
+            <code>curl -s https://bcworks.in.net/Onepiece/ | grep -oP 'href="\K[^"]+(?=")' | grep -v "^#" | grep -v "^$" | xargs -I {} curl -O https://bcworks.in.net/Onepiece/{}</code>
+            
+            <p>Download with wget:</p>
+            <code>wget -r -np -nH --cut-dirs=1 -R "index.html*" https://bcworks.in.net/Onepiece/</code>
+        </div>
+        
+        <div class="file-list">
+            <div class="file-category">
+                <h2>📁 Root Files</h2>
+                <div class="file-grid" id="rootFiles"></div>
+            </div>
+            
+            <div class="file-category">
+                <h2>📂 Directories</h2>
+                <div class="file-grid" id="directories"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const baseUrl = 'https://bcworks.in.net/Onepiece/';
+        
+        const files = [
+            'Accessibility.dll',
+            'clretwrc.dll',
+            'clrgc.dll',
+            'clrjit.dll',
+            'coreclr.dll',
+            'createdump.exe',
+            'D3DCompiler_47_cor3.dll',
+            'DirectWriteForwarder.dll',
+            'hostfxr.dll',
+            'hostpolicy.dll',
+            'logo.png',
+            'Microsoft.CSharp.dll',
+            'Microsoft.DiaSymReader.Native.amd64.dll',
+            'Microsoft.Extensions.Configuration.Abstractions.dll',
+            'Microsoft.Extensions.Configuration.Binder.dll',
+            'Microsoft.Extensions.Configuration.CommandLine.dll',
+            'Microsoft.Extensions.Configuration.dll',
+            'Microsoft.Extensions.Configuration.EnvironmentVariables.dll',
+            'Microsoft.Extensions.Configuration.FileExtensions.dll',
+            'Microsoft.Extensions.Configuration.Json.dll',
+            'Microsoft.Extensions.Configuration.UserSecrets.dll',
+            'Microsoft.Extensions.DependencyInjection.Abstractions.dll',
+            'Microsoft.Extensions.DependencyInjection.dll',
+            'Microsoft.Extensions.Diagnostics.Abstractions.dll',
+            'Microsoft.Extensions.Diagnostics.dll',
+            'Microsoft.Extensions.FileProviders.Abstractions.dll',
+            'Microsoft.Extensions.FileProviders.Physical.dll',
+            'Microsoft.Extensions.FileSystemGlobbing.dll',
+            'Microsoft.Extensions.Hosting.Abstractions.dll',
+            'Microsoft.Extensions.Hosting.dll',
+            'Microsoft.Extensions.Logging.Abstractions.dll',
+            'Microsoft.Extensions.Logging.Configuration.dll',
+            'Microsoft.Extensions.Logging.Console.dll',
+            'Microsoft.Extensions.Logging.Debug.dll',
+            'Microsoft.Extensions.Logging.dll',
+            'Microsoft.Extensions.Logging.EventLog.dll',
+            'Microsoft.Extensions.Logging.EventSource.dll',
+            'Microsoft.Extensions.Options.ConfigurationExtensions.dll',
+            'Microsoft.Extensions.Options.dll',
+            'Microsoft.Extensions.Primitives.dll',
+            'Microsoft.VisualBasic.Core.dll',
+            'Microsoft.VisualBasic.dll',
+            'Microsoft.VisualBasic.Forms.dll',
+            'Microsoft.Win32.Primitives.dll',
+            'Microsoft.Win32.Registry.AccessControl.dll',
+            'Microsoft.Win32.Registry.dll',
+            'Microsoft.Win32.SystemEvents.dll',
+            'Microsoft.Windows.SDK.NET.dll',
+            'mscordaccore.dll',
+            'mscordaccore_amd64_amd64_8.0.1925.36514.dll',
+            'mscordbi.dll',
+            'mscorlib.dll',
+            'mscorrc.dll',
+            'msquic.dll',
+            'netstandard.dll',
+            'OnePiece.deps.json',
+            'OnePiece.dll',
+            'OnePiece.exe',
+            'OnePiece.pdb',
+            'OnePiece.runtimeconfig.json',
+            'PenImc_cor3.dll',
+            'PresentationCore.dll',
+            'PresentationFramework-SystemCore.dll',
+            'PresentationFramework-SystemData.dll',
+            'PresentationFramework-SystemDrawing.dll',
+            'PresentationFramework-SystemXml.dll',
+            'PresentationFramework-SystemXmlLinq.dll',
+            'PresentationFramework.Aero.dll',
+            'PresentationFramework.Aero2.dll',
+            'PresentationFramework.AeroLite.dll',
+            'PresentationFramework.Classic.dll',
+            'PresentationFramework.dll',
+            'PresentationFramework.Luna.dll',
+            'PresentationFramework.Royale.dll',
+            'PresentationNative_cor3.dll',
+            'PresentationUI.dll',
+            'ReachFramework.dll',
+            'System.AppContext.dll',
+            'System.Buffers.dll',
+            'System.CodeDom.dll',
+            'System.Collections.Concurrent.dll',
+            'System.Collections.dll',
+            'System.Collections.Immutable.dll',
+            'System.Collections.NonGeneric.dll',
+            'System.Collections.Specialized.dll',
+            'System.ComponentModel.Annotations.dll',
+            'System.ComponentModel.DataAnnotations.dll',
+            'System.ComponentModel.dll',
+            'System.ComponentModel.EventBasedAsync.dll',
+            'System.ComponentModel.Primitives.dll',
+            'System.ComponentModel.TypeConverter.dll',
+            'System.Configuration.ConfigurationManager.dll',
+            'System.Configuration.dll',
+            'System.Console.dll',
+            'System.Core.dll',
+            'System.Data.Common.dll',
+            'System.Data.DataSetExtensions.dll',
+            'System.Data.dll',
+            'System.Design.dll',
+            'System.Diagnostics.Contracts.dll',
+            'System.Diagnostics.Debug.dll',
+            'System.Diagnostics.DiagnosticSource.dll',
+            'System.Diagnostics.EventLog.dll',
+            'System.Diagnostics.EventLog.Messages.dll',
+            'System.Diagnostics.FileVersionInfo.dll',
+            'System.Diagnostics.PerformanceCounter.dll',
+            'System.Diagnostics.Process.dll',
+            'System.Diagnostics.StackTrace.dll',
+            'System.Diagnostics.TextWriterTraceListener.dll',
+            'System.Diagnostics.Tools.dll',
+            'System.Diagnostics.TraceSource.dll',
+            'System.Diagnostics.Tracing.dll',
+            'System.DirectoryServices.dll',
+            'System.dll',
+            'System.Drawing.Common.dll',
+            'System.Drawing.Design.dll',
+            'System.Drawing.dll',
+            'System.Drawing.Primitives.dll',
+            'System.Dynamic.Runtime.dll',
+            'System.Formats.Asn1.dll',
+            'System.Formats.Tar.dll',
+            'System.Globalization.Calendars.dll',
+            'System.Globalization.dll',
+            'System.Globalization.Extensions.dll',
+            'System.IO.Compression.Brotli.dll',
+            'System.IO.Compression.dll',
+            'System.IO.Compression.FileSystem.dll',
+            'System.IO.Compression.Native.dll',
+            'System.IO.Compression.ZipFile.dll',
+            'System.IO.dll',
+            'System.IO.FileSystem.AccessControl.dll',
+            'System.IO.FileSystem.dll',
+            'System.IO.FileSystem.DriveInfo.dll',
+            'System.IO.FileSystem.Primitives.dll',
+            'System.IO.FileSystem.Watcher.dll',
+            'System.IO.IsolatedStorage.dll',
+            'System.IO.MemoryMappedFiles.dll',
+            'System.IO.Packaging.dll',
+            'System.IO.Pipes.AccessControl.dll',
+            'System.IO.Pipes.dll',
+            'System.IO.UnmanagedMemoryStream.dll',
+            'System.Linq.dll',
+            'System.Linq.Expressions.dll',
+            'System.Linq.Parallel.dll',
+            'System.Linq.Queryable.dll',
+            'System.Memory.dll',
+            'System.Net.dll',
+            'System.Net.Http.dll',
+            'System.Net.Http.Json.dll',
+            'System.Net.HttpListener.dll',
+            'System.Net.Mail.dll',
+            'System.Net.NameResolution.dll',
+            'System.Net.NetworkInformation.dll',
+            'System.Net.Ping.dll',
+            'System.Net.Primitives.dll',
+            'System.Net.Quic.dll',
+            'System.Net.Requests.dll',
+            'System.Net.Security.dll',
+            'System.Net.ServicePoint.dll',
+            'System.Net.Sockets.dll',
+            'System.Net.WebClient.dll',
+            'System.Net.WebHeaderCollection.dll',
+            'System.Net.WebProxy.dll',
+            'System.Net.WebSockets.Client.dll',
+            'System.Net.WebSockets.dll',
+            'System.Numerics.dll',
+            'System.Numerics.Vectors.dll',
+            'System.ObjectModel.dll',
+            'System.Printing.dll',
+            'System.Private.CoreLib.dll',
+            'System.Private.DataContractSerialization.dll',
+            'System.Private.Uri.dll',
+            'System.Private.Xml.dll',
+            'System.Private.Xml.Linq.dll',
+            'System.Reflection.DispatchProxy.dll',
+            'System.Reflection.dll',
+            'System.Reflection.Emit.dll',
+            'System.Reflection.Emit.ILGeneration.dll',
+            'System.Reflection.Emit.Lightweight.dll',
+            'System.Reflection.Extensions.dll',
+            'System.Reflection.Metadata.dll',
+            'System.Reflection.Primitives.dll',
+            'System.Reflection.TypeExtensions.dll',
+            'System.Resources.Extensions.dll',
+            'System.Resources.Reader.dll',
+            'System.Resources.ResourceManager.dll',
+            'System.Resources.Writer.dll',
+            'System.Runtime.CompilerServices.Unsafe.dll',
+            'System.Runtime.CompilerServices.VisualC.dll',
+            'System.Runtime.dll',
+            'System.Runtime.Extensions.dll',
+            'System.Runtime.Handles.dll',
+            'System.Runtime.InteropServices.dll',
+            'System.Runtime.InteropServices.JavaScript.dll',
+            'System.Runtime.InteropServices.RuntimeInformation.dll',
+            'System.Runtime.Intrinsics.dll',
+            'System.Runtime.Loader.dll',
+            'System.Runtime.Numerics.dll',
+            'System.Runtime.Serialization.dll',
+            'System.Runtime.Serialization.Formatters.dll',
+            'System.Runtime.Serialization.Json.dll',
+            'System.Runtime.Serialization.Primitives.dll',
+            'System.Runtime.Serialization.Xml.dll',
+            'System.Security.AccessControl.dll',
+            'System.Security.Claims.dll',
+            'System.Security.Cryptography.Algorithms.dll',
+            'System.Security.Cryptography.Cng.dll',
+            'System.Security.Cryptography.Csp.dll',
+            'System.Security.Cryptography.dll',
+            'System.Security.Cryptography.Encoding.dll',
+            'System.Security.Cryptography.OpenSsl.dll',
+            'System.Security.Cryptography.Pkcs.dll',
+            'System.Security.Cryptography.Primitives.dll',
+            'System.Security.Cryptography.ProtectedData.dll',
+            'System.Security.Cryptography.X509Certificates.dll',
+            'System.Security.Cryptography.Xml.dll',
+            'System.Security.dll',
+            'System.Security.Permissions.dll',
+            'System.Security.Principal.dll',
+            'System.Security.Principal.Windows.dll',
+            'System.Security.SecureString.dll',
+            'System.ServiceModel.Web.dll',
+            'System.ServiceProcess.dll',
+            'System.Text.Encoding.CodePages.dll',
+            'System.Text.Encoding.dll',
+            'System.Text.Encoding.Extensions.dll',
+            'System.Text.Encodings.Web.dll',
+            'System.Text.Json.dll',
+            'System.Text.RegularExpressions.dll',
+            'System.Threading.AccessControl.dll',
+            'System.Threading.Channels.dll',
+            'System.Threading.dll',
+            'System.Threading.Overlapped.dll',
+            'System.Threading.Tasks.Dataflow.dll',
+            'System.Threading.Tasks.dll',
+            'System.Threading.Tasks.Extensions.dll',
+            'System.Threading.Tasks.Parallel.dll',
+            'System.Threading.Thread.dll',
+            'System.Threading.ThreadPool.dll',
+            'System.Threading.Timer.dll',
+            'System.Transactions.dll',
+            'System.Transactions.Local.dll',
+            'System.ValueTuple.dll',
+            'System.Web.dll',
+            'System.Web.HttpUtility.dll',
+            'System.Windows.Controls.Ribbon.dll',
+            'System.Windows.dll',
+            'System.Windows.Extensions.dll',
+            'System.Windows.Forms.Design.dll',
+            'System.Windows.Forms.Design.Editors.dll',
+            'System.Windows.Forms.dll',
+            'System.Windows.Forms.Primitives.dll',
+            'System.Windows.Input.Manipulations.dll',
+            'System.Windows.Presentation.dll',
+            'System.Xaml.dll',
+            'System.Xml.dll',
+            'System.Xml.Linq.dll',
+            'System.Xml.ReaderWriter.dll',
+            'System.Xml.Serialization.dll',
+            'System.Xml.XDocument.dll',
+            'System.Xml.XmlDocument.dll',
+            'System.Xml.XmlSerializer.dll',
+            'System.Xml.XPath.dll',
+            'System.Xml.XPath.XDocument.dll',
+            'Tesseract.dll',
+            'UIAutomationClient.dll',
+            'UIAutomationClientSideProviders.dll',
+            'UIAutomationProvider.dll',
+            'UIAutomationTypes.dll',
+            'vcruntime140_cor3.dll',
+            'WindowsBase.dll',
+            'WindowsFormsIntegration.dll',
+            'WindowsInput.dll',
+            'WinRT.Runtime.dll',
+            'wpfgfx_cor3.dll'
+        ];
+        
+        const directories = [
+            'cs/',
+            'de/',
+            'es/',
+            'fr/',
+            'it/',
+            'ja/',
+            'ko/',
+            'pl/',
+            'pt-BR/',
+            'ru/',
+            'tessdata/',
+            'tr/',
+            'x64/',
+            'x86/',
+            'zh-Hans/',
+            'zh-Hant/'
+        ];
+        
+        // Update stats
+        document.getElementById('fileCount').textContent = files.length;
+        document.getElementById('folderCount').textContent = directories.length;
+        
+        // Render files
+        const rootFilesContainer = document.getElementById('rootFiles');
+        files.forEach(file => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.setAttribute('data-name', file.toLowerCase());
+            fileItem.innerHTML = `
+                <span class="file-name">
+                    <span class="file-icon">📄</span>
+                    ${file}
+                </span>
+                <a href="${file}" class="download-btn" download>Download</a>
+            `;
+            rootFilesContainer.appendChild(fileItem);
+        });
+        
+        // Render directories
+        const directoriesContainer = document.getElementById('directories');
+        directories.forEach(dir => {
+            const dirItem = document.createElement('div');
+            dirItem.className = 'file-item folder-item';
+            dirItem.setAttribute('data-name', dir.toLowerCase());
+            dirItem.innerHTML = `
+                <span class="file-name">
+                    <span class="file-icon">📁</span>
+                    ${dir}
+                </span>
+                <a href="https://github.com/guider23/Onepiece" target="_blank" class="download-btn">Browse</a>
+            `;
+            directoriesContainer.appendChild(dirItem);
+        });
+        
+        // Search functionality
+        function filterFiles() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const allItems = document.querySelectorAll('.file-item');
+            
+            allItems.forEach(item => {
+                const name = item.getAttribute('data-name');
+                if (name.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
