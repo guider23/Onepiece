@@ -53,7 +53,7 @@ OnePiece is your invisible coding assistant that helps you tackle tough online c
 ## Technical Details
 
 - OCR: Tesseract 5.2.0
-- AI: AWS Bedrock Llama 3.1 8B
+- AI: AWS Bedrock Llama 3.1 8B - For api replacement contact sofiyasenthilkumar@gmail.com
 - Auto-typing: WindowsInput simulator
 - Framework: .NET 8.0 WPF + Windows Forms
 - Authentication: Hardcoded Bearer token
