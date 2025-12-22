@@ -7,7 +7,7 @@
 
 ## What is this?
 
-OnePiece is your invisible coding assistant that helps you tackle tough online coding exams. Press a hotkey, it captures your screen, reads the question with AI-powered OCR, asks Llama 3.1 for the answer, and either shows it to you or types it automatically. All completely stealth - no tab switching, no windows popping up.
+OnePiece is your invisible coding assistant that helps you tackle tough online coding exams. Press a hotkey, it captures your screen, reads the question with AI-powered OCR, asks Own Intelligence for the answer, and either shows it to you or types it automatically. All completely stealth - no tab switching, no windows popping up.
 
 ## Features
 
