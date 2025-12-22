@@ -53,7 +53,7 @@ OnePiece is your invisible coding assistant that helps you tackle tough online c
 ## Technical Details
 
 - OCR: Tesseract 5.2.0
-- AI: AWS Bedrock Llama 3.1 8B - For api replacement contact sofiyasenthilkumar@gmail.com
+- AI: Own Intelligence v1
 - Auto-typing: WindowsInput simulator
 - Framework: .NET 8.0 WPF + Windows Forms
 - Authentication: Hardcoded Bearer token
@@ -103,6 +103,6 @@ OnePiece is your invisible coding assistant that helps you tackle tough online c
 
 ---
 
-Built with C#, AWS Bedrock, Tesseract, and questionable exam ethics lol.
+Built with C#, Own Intelligence, Tesseract, and questionable exam ethics lol.
 
 > "The rise of worst generation ?"
