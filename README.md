@@ -71,7 +71,7 @@ OnePiece is your invisible coding assistant that helps you tackle tough online c
 - Ensure tessdata folder is next to OnePiece.exe
 - Check eng.traineddata file exists inside tessdata
 
-**"Bedrock API error"**
+**"Own Intelligence API error"**
 - Verify internet connection
 - Bearer token might be expired
 
